@@ -1,6 +1,6 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local camera = workspace.CurrentCamera
-local espMonsterList = {'RushMoving', 'AmbushMoving', 'FigureRagdoll', 'FigureRagdoll', 'FigureLibrary', 'SeekMoving', 'Eyes', 'Snare', 'A60', 'A120'}
+local espMonsterList = {'RushMoving', 'AmbushMoving', 'FigureRagdoll', 'FigureRagdoll', 'FigureLibrary', 'SeekMoving', 'Eyes', 'A60', 'A120'}
 local espItemsList = {'KeyObtain', 'LiveHintBook', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'Fuse', 'Shears', 'Paper', 'ElectricialKeyObtain', 'Shakelight', 'Scanner'}
 local espOthersList = {'Door', 'LeverForGate', 'GoldPile', 'Bandage'}
 local PLR = game:GetService('Players').LocalPlayer
@@ -196,6 +196,9 @@ local function ApplySettings(Object)
 	if Object.Name == 'Attachment' and Object.ClassName == 'Attachment' and Object.Parent.Name == 'RushNew' then
 		LSPLASH(Object)
 	end
+	if Object.Name == 'Snare' then
+		Object.Hitbox.CanTouch = false
+	end
 end
 
 
@@ -206,11 +209,11 @@ local CharacterSection = CharacterTab:NewSection("Character")
 
 
 
-CharacterSection:NewSlider("Speed", "Makes you go fast", 25, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
+CharacterSection:NewSlider("Speed", "Makes you go fast", 20, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
-CharacterSection:NewSlider("Fov", "Change your field of view", 120, 70, function(s) -- 500 (MaxValue) | 0 (MinValue)
+CharacterSection:NewSlider("Fov", "Change your field of view", 120, 80, function(s) -- 500 (MaxValue) | 0 (MinValue)
 	camera.FieldOfView = s
 end)
 
