@@ -1,0 +1,297 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local camera = workspace.CurrentCamera
+local espMonsterList = {'RushMoving', 'AmbushMoving', 'FigureRagdoll', 'FigureRagdoll', 'FigureLibrary', 'SeekMoving', 'Eyes', 'Snare', 'A60', 'A120'}
+local espItemsList = {'KeyObtain', 'LiveHintBook', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'Fuse', 'Shears', 'Paper', 'ElectricialKeyObtain', 'Shakelight', 'Scanner'}
+local espOthersList = {'Door', 'LeverForGate', 'GoldPile', 'Bandage'}
+local PLR = game:GetService('Players').LocalPlayer
+local PlrCharacter = PLR.Character:FindFirstChild('HumanoidRootPart')
+local position = nil
+local EntityInfo = game.ReplicatedStorage.EntityInfo
+local Entities = game.ReplicatedStorage.Entities
+_G.NotifyEntity = false;
+_G.DisableSeek = false;
+_G.ItemESP = false;
+_G.EntityESP = false;
+_G.OthersESP = false;
+_G.InstantInteract = false;
+
+local function Notify(Image, Text)
+	local starterGUI = game:GetService('StarterGui')
+	starterGUI:SetCore("SendNotification", {
+		Title = 'Warning!!';
+		Text = Text;
+		Icon = 'rbxassetid://'.. Image
+	})
+end
+
+local function Highlight(Object)
+	local Hilight =  Instance.new('Highlight')
+	Hilight.Parent = Object
+	Hilight.FillColor = Color3.new(255, 255, 255)
+	Hilight.OutlineColor = Color3.new(255, 0, 0)
+end
+
+local function HighlightDoor(Object)
+	local Hilight =  Instance.new('Highlight')
+	Hilight.Parent = Object
+	Hilight.FillColor = Color3.new(1, 1, 1)
+	Hilight.OutlineColor = Color3.new(0.0156863, 1, 0)
+end
+
+
+
+local function ApplySettings(Object)
+	print("applyy")
+
+	if table.find(espMonsterList, Object.Name) and Object.ClassName == 'Model' then
+		local espMonsterLabel = Instance.new('TextLabel')
+		if table.find(espMonsterList, Object.Name) and Object.ClassName == 'Model' then
+
+			if _G.EntityESP == true then
+				local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+				local TextLabel = Instance.new('TextLabel') -- makes text label
+
+				BillboardGui.Parent = Object -- what the billboardgui goes into
+				BillboardGui.AlwaysOnTop = true -- if its on top or not
+				BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+				BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+				TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+				TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+				TextLabel.BackgroundTransparency = 0.5
+				TextLabel.BorderColor3 = Color3.new(255, 0, 0)
+				TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+				TextLabel.Text = Object.Name -- what the label says
+				TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
+				TextLabel.TextScaled = true -- if the text is scaled or not
+				TextLabel.TextScaled = true -- if the text is scaled or not
+				BillboardGui.Name = "MonsterESPGUI"
+				position = PlrCharacter.Position
+				local monsterPOS = Object.WorldPivot.Position
+				local distanceBetweenPLRandENTITy = monsterPOS - position
+				local REALDISTANCE = distanceBetweenPLRandENTITy.Magnitude
+				if REALDISTANCE < 7000 then
+					if Object.Name == 'RushMoving' then
+						Notify('10716387808', 'Rush has been SPAWNED!')
+					end
+					if Object.Name == 'AmbushMoving' then
+						Notify('10722835155', 'Ambush has been SPAWNED!')
+					end
+					if Object.Name == 'FigureRagdoll' or Object.Name == 'FigureLibrary' then
+						Notify('10743849078', 'Figure has been SPAWNED!')
+					end
+					if Object.Name == 'SeekMoving' then
+						Notify('10642752380', 'Seek has been SPAWNED!')
+					end
+					if Object.Name == 'Eyes' then
+						Notify('11537434023', 'Eyes has been SPAWNED!')
+					end
+					if Object.Name == 'A60' then
+						Notify('13854469049', 'A60 has been SPAWNED!')
+					end
+					if Object.Name == 'A120' then
+						Notify('12554635766', 'A120 has been SPAWNED!')
+					end
+				end
+			end
+
+
+		end
+	end
+	if table.find(espItemsList, Object.Name) and Object.ClassName == 'Model' then
+		local espMonsterLabel = Instance.new('TextLabel')
+		if table.find(espItemsList, Object.Name) and Object.ClassName == 'Model' then
+			if Object.ClassName == 'Model' then
+				if _G.ItemESP == true then
+					local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+					local TextLabel = Instance.new('TextLabel') -- makes text label
+
+					BillboardGui.Parent = Object -- what the billboardgui goes into
+					BillboardGui.AlwaysOnTop = true -- if its on top or not
+					BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+					BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+					TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+					TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+					TextLabel.BackgroundTransparency = 1
+					TextLabel.BorderColor3 = Color3.new(255, 0, 0)
+					TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+					TextLabel.Text = Object.Name -- what the label says
+					TextLabel.TextColor3 = Color3.new(255, 255, 0) -- color
+					TextLabel.TextScaled = true -- if the text is scaled or not
+					TextLabel.TextScaled = true -- if the text is scaled or not
+					BillboardGui.Name = "ItemESPlol"
+					Highlight(Object)
+				end
+			end
+		end
+	end
+	if table.find(espOthersList, Object.Name) and Object.ClassName == 'Model' then
+		local espMonsterLabel = Instance.new('TextLabel')
+		if table.find(espOthersList, Object.Name) and Object.ClassName == 'Model' then
+			if Object.ClassName == 'Model' then
+				if _G.OthersESP == true then
+					local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+					local TextLabel = Instance.new('TextLabel') -- makes text label
+
+					BillboardGui.Parent = Object -- what the billboardgui goes into
+					BillboardGui.AlwaysOnTop = true -- if its on top or not
+					BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+					BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+					TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+					TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+					TextLabel.BackgroundTransparency = 1
+					TextLabel.BorderColor3 = Color3.new(255, 0, 0)
+					TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+					TextLabel.Text = Object.Name -- what the label says
+					TextLabel.TextColor3 = Color3.new(0, 0.741176, 0.372549) -- color
+					TextLabel.TextScaled = true -- if the text is scaled or not
+					TextLabel.TextScaled = true -- if the text is scaled or not
+					BillboardGui.Name = "lolOTHERespsLOLLD"
+					if Object.Name == 'Door' and Object.ClassName == 'Model' then
+						HighlightDoor(Object)
+					end
+				end
+			end
+		end
+	end
+	if _G.DisableSeek == false then
+		if Object.Parent and Object.Parent.Name == "TriggerEventCollision" then
+			Object.CanCollide = false
+			Object.CanTouch = false
+		end
+	end
+	if Object:IsA('ProximityPrompt') then
+		if _G.InstantInteract == true then
+			Object.HoldDuration = 0
+		end
+	end
+end
+
+local Window = Library.CreateLib("RODoors", "DarkTheme")
+local CharacterTab = Window:NewTab("Character")
+local CharacterSection = CharacterTab:NewSection("Character")
+
+
+
+CharacterSection:NewSlider("Speed", "Makes you go fast", 25, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+CharacterSection:NewSlider("Fov", "Change your field of view", 120, 70, function(s) -- 500 (MaxValue) | 0 (MinValue)
+	camera.FieldOfView = s
+end)
+
+local EntityTab = Window:NewTab("Entity")
+local ESPSECTION = EntityTab:NewSection("ESP")
+
+
+ESPSECTION:NewButton("ESP Player", "ESP", function()
+	local players = game.Players:GetPlayers()
+	for i,v in pairs(players) do
+		local esp = Instance.new("Highlight")
+		esp.Name = v.Name
+		esp.FillTransparency = 0
+		esp.FillColor = Color3.new(1, 0.66667, 0)
+		esp.OutlineColor = Color3.new(1, 0.33337, 1)
+
+		esp.Parent = v.Character
+	end
+
+end)
+
+
+ESPSECTION:NewToggle("ESP Monsters", "ESP Entites", function(state)
+	if state then
+		_G.EntityESP = true;
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			ApplySettings(v)
+		end
+
+	else
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == 'MonsterESPGUI' then
+				v:Remove()
+			end
+		end
+		_G.EntityESP = false;
+	end
+end)
+
+ESPSECTION:NewToggle("ESP Items", "ESP ITEMS/Pickup", function(state)
+	if state then
+		_G.ItemESP = true;
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			ApplySettings(v)
+		end
+
+	else
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == 'ItemESPlol' then
+				v:Remove()
+			end
+		end
+		_G.ItemESP = false;
+	end
+end)
+
+ESPSECTION:NewToggle("ESP Others", "Levers, Goldpiles, etc.", function(state)
+	if state then
+		_G.OthersESP = true;
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			ApplySettings(v)
+		end
+
+	else
+		for i, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == 'lolOTHERespsLOLLD' then
+				v:Remove()
+			end
+		end
+		_G.OthersESP = false;
+	end
+end)
+
+
+local OthersTab = Window:NewTab("Others")
+local OthersSection = OthersTab:NewSection("OTHERS")
+
+OthersSection:NewButton("Screech Disable", "kills screech", function()
+	for i, v in pairs(Entities:GetDescendants()) do
+		if v.Name == 'Screech' then
+			v.Name = 'fawkc'
+		end
+	end
+end)
+OthersSection:NewButton("Glitch Disable", "GLITCHES GLITH OUT", function()
+	for i, v in pairs(Entities:GetDescendants()) do
+		if v.Name == 'Glitch' then
+			v.Name = 'IGotGlitchedOut'
+		end
+	end
+end)
+
+OthersSection:NewButton("Disable Seek Trigger", "LSPLASH REMOVE SEEK", function()
+	_G.DisableSeek = true;
+end)
+
+OthersSection:NewButton("Instant Interact", "Instant E", function()
+	_G.InstantInteract = true;
+end)
+
+
+OthersSection:NewButton("Godmode", "Become invicible (not bypass anticheat)", function()
+	local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
+    Collision.Position = Collision.Position - Vector3.new(0, 13.2, 0)
+    game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
+    
+end)
+
+
+
+
+workspace.DescendantAdded:Connect(ApplySettings)
+
+
+
