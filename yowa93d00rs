@@ -18,20 +18,34 @@ local RushToLsplash = false
 
 
 local function LSPLASH(Object)
+	for i, v in pairs(Object:GetChildren()) do
+		if v.Name ~= 'Attachment' then
+			v:Remove()
+		end
+	end
+
+
 	local particleEmitter = Object:FindFirstChild('ParticleEmitter')
 	if particleEmitter then
 		particleEmitter.Texture = 'rbxassetid://12700144138'
 
 
 	end
-	local Black = Object:FindFirstChild('Black')
-	if Black then
-		Black:Remove()
-	end
-	local BlackTrail = Object:FindFirstChild('BlackTrail')
-	if BlackTrail then
-		BlackTrail:Remove()
-	end
+	local lsplashImg = Instance.new('ParticleEmitter')
+	lsplashImg.Parent = Object
+	lsplashImg.Texture = 'rbxassetid://12700144138'
+	local lsplashImg = Instance.new('ParticleEmitter')
+	lsplashImg.Parent = Object
+	lsplashImg.Texture = 'rbxassetid://12700144138'
+	local lsplashImg = Instance.new('ParticleEmitter')
+	lsplashImg.Parent = Object
+	lsplashImg.Texture = 'rbxassetid://12700144138'
+	local lsplashImg = Instance.new('ParticleEmitter')
+	lsplashImg.Parent = Object
+	lsplashImg.Texture = 'rbxassetid://12700144138'
+	local lsplashImg = Instance.new('ParticleEmitter')
+	lsplashImg.Parent = Object
+	lsplashImg.Texture = 'rbxassetid://12700144138'
 end
 
 local function Notify(Image, Text)
@@ -300,7 +314,7 @@ end)
 
 OthersSection:NewButton("Godmode", "Become invicible (not bypass anticheat)", function()
 	local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
-	Collision.Position = Collision.Position - Vector3.new(0, 13.2, 0)
+	Collision.Position = Collision.Position - Vector3.new(0, 5.2, 0)
 	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
 
 end)
@@ -311,11 +325,18 @@ local ModsSection = ModsTab:NewSection("Mods")
 ModsSection:NewToggle("Rush to Lsplash", "Lsplash replaced rush with him", function(state)
 	if state then
 		RushToLsplash = true
-		
+
 	else
 		RushToLsplash = false
 	end
 end)
+
+OthersSection:NewButton("Void/Glitch Destroyer", "Go anywhere freely, even fly out the map without glitch", function()
+
+	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
+
+end)
+
 
 
 
