@@ -312,7 +312,7 @@ end)
 
 OthersSection:NewButton("Godmode", "Become invicible (not bypass anticheat)", function()
 	local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
-	Collision.Position = Collision.Position - Vector3.new(0, 5.7, 0)
+	Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
 	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
 
 end)
