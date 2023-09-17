@@ -1,7 +1,7 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local camera = workspace.CurrentCamera
 local espMonsterList = {'RushMoving', 'AmbushMoving', 'FigureRagdoll', 'FigureRagdoll', 'FigureLibrary', 'SeekMoving', 'Eyes', 'A60', 'A120'}
-local espItemsList = {'KeyObtain', 'LiveHintBook', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'Fuse', 'Shears', 'Paper', 'ElectricialKeyObtain', 'Shakelight', 'Scanner'}
+local espItemsList = {'KeyObtain', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'Fuse', 'Shears', 'Paper', 'ElectricialKeyObtain', 'Shakelight', 'Scanner'}
 local espOthersList = {'Door', 'LeverForGate', 'GoldPile', 'Bandage'}
 local PLR = game:GetService('Players').LocalPlayer
 local PlrCharacter = PLR.Character:FindFirstChild('HumanoidRootPart')
@@ -224,6 +224,27 @@ local function ApplySettings(Object)
 	end
 	if Object.Name == 'Snare' then
 		Object.Hitbox.CanTouch = false
+	end
+	if Object.Name == 'LiveHintBook' or 'Fuse' then
+		local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+		local TextLabel = Instance.new('TextLabel') -- makes text label
+
+		BillboardGui.Parent = Object -- what the billboardgui goes into
+		BillboardGui.AlwaysOnTop = true -- if its on top or not
+		BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+		BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+		TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+		TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.BorderColor3 = Color3.new(255, 0, 0)
+		TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+		TextLabel.Text = Object.Name -- what the label says
+		TextLabel.TextColor3 = Color3.new(255, 255, 0) -- color
+		TextLabel.TextScaled = true -- if the text is scaled or not
+		TextLabel.TextScaled = true -- if the text is scaled or not
+		BillboardGui.Name = "ItemESPlol"
+		wait(0.5)
 	end
 end
 
