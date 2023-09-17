@@ -152,8 +152,7 @@ local function ApplySettings(Object)
 	end
 	if _G.DisableSeek == false then
 		if Object.Parent and Object.Parent.Name == "TriggerEventCollision" then
-			Object.CanCollide = false
-			Object.CanTouch = false
+			Object:Remove()
 		end
 	end
 	if Object:IsA('ProximityPrompt') then
