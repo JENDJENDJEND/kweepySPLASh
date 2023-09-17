@@ -15,37 +15,38 @@ _G.EntityESP = false;
 _G.OthersESP = false;
 _G.InstantInteract = false;
 local RushToLsplash = false
+local PARTICLE_TEXTURE_ID = 'rbxassetid://12700144138'
+local BRIGHTNESS = 10
+local LIGHT_EMISSION = 0.3
+local LIGHT_INFLUENCE = 0
+local Z_OFFSET = 4
+local PARTICLE_LIFETIME = 0.3
+local increment = 5
+local PARTICLE_SIZE = NumberSequence.new(increment)
 
 
 local function LSPLASH(Object)
-	for i, v in pairs(Object:GetChildren()) do
-		if v.Name ~= 'Attachment' then
-			v:Remove()
+	for _, child in pairs(Object:GetChildren()) do
+		if child.Name ~= 'Attachment' then
+			child:Remove()
 		end
 	end
 
-
 	local particleEmitter = Object:FindFirstChild('ParticleEmitter')
 	if particleEmitter then
-		particleEmitter.Texture = 'rbxassetid://12700144138'
-
-
+		particleEmitter.Texture = PARTICLE_TEXTURE_ID
 	end
+
 	local lsplashImg = Instance.new('ParticleEmitter')
 	lsplashImg.Parent = Object
-	lsplashImg.Texture = 'rbxassetid://12700144138'
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = 'rbxassetid://12700144138'
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = 'rbxassetid://12700144138'
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = 'rbxassetid://12700144138'
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = 'rbxassetid://12700144138'
+	lsplashImg.Texture = PARTICLE_TEXTURE_ID
+	lsplashImg.Brightness = BRIGHTNESS
+	lsplashImg.LightEmission = LIGHT_EMISSION
+	lsplashImg.LightInfluence = LIGHT_INFLUENCE
+	lsplashImg.ZOffset = Z_OFFSET
+	lsplashImg.Size = PARTICLE_SIZE
+	lsplashImg.Lifetime = NumberRange.new(PARTICLE_LIFETIME, PARTICLE_LIFETIME)
+	
 end
 
 local function Notify(Image, Text)
@@ -96,8 +97,7 @@ local function ApplySettings(Object)
 				local monsterPOS = Object.WorldPivot.Position
 				local distanceBetweenPLRandENTITy = monsterPOS - position
 				local REALDISTANCE = distanceBetweenPLRandENTITy.Magnitude
-				print(REALDISTANCE)
-				if REALDISTANCE < 4000 then
+				if REALDISTANCE < 7000 then
 					if Object.Name == 'RushMoving' then
 						Notify('10716387808', 'Rush has been SPAWNED!')
 					end
@@ -299,13 +299,7 @@ OthersSection:NewButton("Screech Disable", "kills screech", function()
 		end
 	end
 end)
-OthersSection:NewButton("Glitch Disable", "GLITCHES GLITH OUT", function()
-	for i, v in pairs(Entities:GetDescendants()) do
-		if v.Name == 'Glitch' then
-			v.Name = 'IGotGlitchedOut'
-		end
-	end
-end)
+
 
 OthersSection:NewButton("Disable Seek Trigger", "LSPLASH REMOVE SEEK", function()
 	_G.DisableSeek = true;
