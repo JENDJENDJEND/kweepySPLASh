@@ -23,7 +23,7 @@ local Z_OFFSET = 4
 local PARTICLE_LIFETIME = 0.3
 local increment = 5
 local PARTICLE_SIZE = NumberSequence.new(increment)
-local RushToBaldKreek = false
+
 
 
 local function LSPLASH(Object)
@@ -50,29 +50,7 @@ local function LSPLASH(Object)
 
 end
 
-local function RediblesR(Object)
-	for _, child in pairs(Object:GetChildren()) do
-		if child.Name ~= 'Attachment' then
-			child:Remove()
-		end
-	end
 
-	local particleEmitter = Object:FindFirstChild('ParticleEmitter')
-	if particleEmitter then
-		particleEmitter.Texture = PARTICLE_TEXTURE_ID
-	end
-
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = PARTICLE_TEXTURE_ID
-	lsplashImg.Brightness = BRIGHTNESS
-	lsplashImg.LightEmission = LIGHT_EMISSION
-	lsplashImg.LightInfluence = LIGHT_INFLUENCE
-	lsplashImg.ZOffset = Z_OFFSET
-	lsplashImg.Size = PARTICLE_SIZE
-	lsplashImg.Lifetime = NumberRange.new(PARTICLE_LIFETIME, PARTICLE_LIFETIME)
-
-end
 
 local function Notify(Image, Text)
 	local starterGUI = game:GetService('StarterGui')
@@ -383,23 +361,7 @@ ModsSection:NewToggle("Rush to Lsplash", "Lsplash replaced rush with him", funct
 	end
 end)
 
-ModsSection:NewToggle("Rush to Bald Kreek", "Redibles replaced rush with him", function(state)
-	if state then
-		RushToBaldKreek = true
-		RushToLsplash = false
-		PARTICLE_TEXTURE_ID = 'rbxassetid://10864966248'
-		BRIGHTNESS = 1
-		LIGHT_EMISSION = 0.3
-		LIGHT_INFLUENCE = 0
-		Z_OFFSET = 4
-		PARTICLE_LIFETIME = 0.3
-		increment = 3.4
-		PARTICLE_SIZE = NumberSequence.new(increment)
-	else
-		RushToBaldKreek = false
-		
-	end
-end)
+
 
 
 OthersSection:NewButton("Void/Glitch Destroyer", "Go anywhere freely, even fly out the map without glitch", function()
