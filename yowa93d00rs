@@ -96,7 +96,8 @@ local function ApplySettings(Object)
 				local monsterPOS = Object.WorldPivot.Position
 				local distanceBetweenPLRandENTITy = monsterPOS - position
 				local REALDISTANCE = distanceBetweenPLRandENTITy.Magnitude
-				if REALDISTANCE < 7000 then
+				print(REALDISTANCE)
+				if REALDISTANCE < 4000 then
 					if Object.Name == 'RushMoving' then
 						Notify('10716387808', 'Rush has been SPAWNED!')
 					end
