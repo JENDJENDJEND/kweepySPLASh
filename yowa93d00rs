@@ -1,7 +1,7 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local camera = workspace.CurrentCamera
 local espMonsterList = {'RushMoving', 'AmbushMoving', 'FigureRagdoll', 'FigureRagdoll', 'FigureLibrary', 'SeekMoving', 'Eyes', 'A60', 'A120'}
-local espItemsList = {'KeyObtain', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'Fuse', 'Shears', 'Paper', 'ElectricialKeyObtain', 'Shakelight', 'Scanner'}
+local espItemsList = {'KeyObtain', 'LiveHintBook', 'Lighter', 'Lockpick', 'Vitamins', 'Crucifix', 'CrucifixWall', 'SkeletonKey', 'Flashlight', 'Candle', 'LiveBreakerPolePickup', 'Shears', 'Battery', 'PickupItem', 'ElectricalKeyObtain', 'Shakelight', 'Scanner'}
 local espOthersList = {'Door', 'LeverForGate', 'GoldPile', 'Bandage'}
 local PLR = game:GetService('Players').LocalPlayer
 local PlrCharacter = PLR.Character:FindFirstChild('HumanoidRootPart')
@@ -14,42 +14,6 @@ _G.ItemESP = false;
 _G.EntityESP = false;
 _G.OthersESP = false;
 _G.InstantInteract = false;
-local RushToLsplash = false
-local PARTICLE_TEXTURE_ID = 'rbxassetid://12700144138'
-local BRIGHTNESS = 10
-local LIGHT_EMISSION = 0.3
-local LIGHT_INFLUENCE = 0
-local Z_OFFSET = 4
-local PARTICLE_LIFETIME = 0.3
-local increment = 5
-local PARTICLE_SIZE = NumberSequence.new(increment)
-
-
-
-local function LSPLASH(Object)
-	for _, child in pairs(Object:GetChildren()) do
-		if child.Name ~= 'Attachment' then
-			child:Remove()
-		end
-	end
-
-	local particleEmitter = Object:FindFirstChild('ParticleEmitter')
-	if particleEmitter then
-		particleEmitter.Texture = PARTICLE_TEXTURE_ID
-	end
-
-	local lsplashImg = Instance.new('ParticleEmitter')
-	lsplashImg.Parent = Object
-	lsplashImg.Texture = PARTICLE_TEXTURE_ID
-	lsplashImg.Brightness = BRIGHTNESS
-	lsplashImg.LightEmission = LIGHT_EMISSION
-	lsplashImg.LightInfluence = LIGHT_INFLUENCE
-	lsplashImg.ZOffset = Z_OFFSET
-	lsplashImg.Size = PARTICLE_SIZE
-	lsplashImg.Lifetime = NumberRange.new(PARTICLE_LIFETIME, PARTICLE_LIFETIME)
-
-end
-
 
 
 local function Notify(Image, Text)
@@ -197,32 +161,9 @@ local function ApplySettings(Object)
 			Object.HoldDuration = 0
 		end
 	end
-	if Object.Name == 'Attachment' and Object.ClassName == 'Attachment' and Object.Parent.Name == 'RushNew' then
-		LSPLASH(Object)
-	end
+	
 	if Object.Name == 'Snare' then
 		Object.Hitbox.CanTouch = false
-	end
-	if Object.Name == 'LiveHintBook' or 'Fuse' then
-		local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
-		local TextLabel = Instance.new('TextLabel') -- makes text label
-
-		BillboardGui.Parent = Object -- what the billboardgui goes into
-		BillboardGui.AlwaysOnTop = true -- if its on top or not
-		BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
-		BillboardGui.StudsOffset = Vector3.new(0,2,0)
-
-		TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
-		TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
-		TextLabel.BackgroundTransparency = 1
-		TextLabel.BorderColor3 = Color3.new(255, 0, 0)
-		TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
-		TextLabel.Text = Object.Name -- what the label says
-		TextLabel.TextColor3 = Color3.new(255, 255, 0) -- color
-		TextLabel.TextScaled = true -- if the text is scaled or not
-		TextLabel.TextScaled = true -- if the text is scaled or not
-		BillboardGui.Name = "ItemESPlol"
-		wait(0.5)
 	end
 end
 
@@ -334,39 +275,21 @@ OthersSection:NewButton("Instant Interact", "Instant E", function()
 end)
 
 
-OthersSection:NewButton("Godmode", "Become invicible (not bypass anticheat)", function()
+OthersSection:NewButton("Godmode", "Become invicible (noclip bypass, only invicible to Rush/Ambush)", function()
 	local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
 	Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
-	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
+	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
 
 end)
 
-local ModsTab = Window:NewTab("Mods")
-local ModsSection = ModsTab:NewSection("Mods")
 
-ModsSection:NewToggle("Rush to Lsplash", "Lsplash replaced rush with him", function(state)
-	if state then
-		RushToLsplash = true
-		RushToBaldKreek = false
-		PARTICLE_TEXTURE_ID = 'rbxassetid://12700144138'
-		BRIGHTNESS = 10
-		LIGHT_EMISSION = 0.3
-		LIGHT_INFLUENCE = 0
-		Z_OFFSET = 4
-		PARTICLE_LIFETIME = 0.3
-		increment = 5
-		PARTICLE_SIZE = NumberSequence.new(increment)
-	else
-		RushToLsplash = false
-	end
-end)
 
 
 
 
 OthersSection:NewButton("Void/Glitch Destroyer", "Go anywhere freely, even fly out the map without glitch", function()
 
-	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:destroy()
+	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
 
 end)
 
