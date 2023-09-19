@@ -13,8 +13,26 @@ _G.DisableSeek = false;
 _G.ItemESP = false;
 _G.EntityESP = false;
 _G.OthersESP = false;
-_G.InstantInteract = false;
+InstantInteract = false
 
+
+local function ShearsMod()
+    -- Spawner Customizations --
+    _G.Luck = 78 -- The chance of shears spawning in the game
+    _G.Spawns = true -- If the shears can spawn naturally in the game
+    -- Tool Customizations --
+    _G.Durability = 5 -- How much durability it will have until it breaks
+    _G.MaxDurability = 5 -- The max durability if you enable regeneration
+    _G.InfiniteUses = false -- If The Shears have infinite uses and cannot break
+    _G.DurabilityTakenEachSnip = 0.25 -- How much each snip you take with the shears takes from the durability
+    _G.SnipSpeed = 1.25 -- The speed of the snipping
+    -- Regeneration --
+    _G.Regens = true -- If the shears regenerate after being used
+    _G.RegenSpeed = 1 -- How fast the shears will regenerate after being used
+    _G.RegenAmount = 0.4 -- How much durability it will regenerate after the chosen amount of time
+    -- Loadstring --
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/iimateiYT/Scripts/main/Buffed%20Shears%20On%20Everything.lua"))()
+end
 
 local function Notify(Image, Text)
 	local starterGUI = game:GetService('StarterGui')
@@ -156,7 +174,7 @@ local function ApplySettings(Object)
 		end
 	end
 	if Object:IsA('ProximityPrompt') then
-		if _G.InstantInteract == true then
+		if InstantInteract == true then
 			Object.HoldDuration = 0
 		end
 	end
@@ -282,9 +300,26 @@ OthersSection:NewButton("Godmode", "Become invicible (noclip bypass, only invici
 end)
 
 
+OthersSection:NewToggle("Godmode", "Become invicible (noclip bypass, only invicible to Rush/Ambush)", function(state)
+	if state then
+		local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
+	    Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
+	    game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
 
+	else
+		local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
+	    Collision.Position = Collision.Position + Vector3.new(0, 8.7, 0)
+	    game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
+	end
+end)
 
+local ModsTab = Window:NewTab("Mods")
+local ModsSection = OthersTab:NewSection("MODS")
 
+ModsSection:NewButton("Shears Mod", "The shears, might be found in game", function()
+	ShearsMod()
+
+end)
 
 OthersSection:NewButton("Void/Glitch Destroyer", "Go anywhere freely, even fly out the map without glitch", function()
 
