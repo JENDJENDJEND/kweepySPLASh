@@ -14,25 +14,37 @@ _G.ItemESP = false;
 _G.EntityESP = false;
 _G.OthersESP = false;
 InstantInteract = false
+local plrSpeed = 16
+local plrFOV = 80
 
 
 local function ShearsMod()
-    -- Spawner Customizations --
-    _G.Luck = 78 -- The chance of shears spawning in the game
-    _G.Spawns = true -- If the shears can spawn naturally in the game
-    -- Tool Customizations --
-    _G.Durability = 5 -- How much durability it will have until it breaks
-    _G.MaxDurability = 5 -- The max durability if you enable regeneration
-    _G.InfiniteUses = false -- If The Shears have infinite uses and cannot break
-    _G.DurabilityTakenEachSnip = 0.25 -- How much each snip you take with the shears takes from the durability
-    _G.SnipSpeed = 1.25 -- The speed of the snipping
-    -- Regeneration --
-    _G.Regens = true -- If the shears regenerate after being used
-    _G.RegenSpeed = 1 -- How fast the shears will regenerate after being used
-    _G.RegenAmount = 0.4 -- How much durability it will regenerate after the chosen amount of time
-    -- Loadstring --
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/iimateiYT/Scripts/main/Buffed%20Shears%20On%20Everything.lua"))()
+	-- Spawner Customizations --
+	_G.Luck = 78 -- The chance of shears spawning in the game
+	_G.Spawns = true -- If the shears can spawn naturally in the game
+	-- Tool Customizations --
+	_G.Durability = 5 -- How much durability it will have until it breaks
+	_G.MaxDurability = 5 -- The max durability if you enable regeneration
+	_G.InfiniteUses = true -- If The Shears have infinite uses and cannot break
+	_G.DurabilityTakenEachSnip = 0.25 -- How much each snip you take with the shears takes from the durability
+	_G.SnipSpeed = 1.25 -- The speed of the snipping
+	-- Regeneration --
+	_G.Regens = true -- If the shears regenerate after being used
+	_G.RegenSpeed = 1 -- How fast the shears will regenerate after being used
+	_G.RegenAmount = 0.4 -- How much durability it will regenerate after the chosen amount of time
+	-- Loadstring --
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/iimateiYT/Scripts/main/Buffed%20Shears%20On%20Everything.lua"))()
 end
+
+local function ApplyWhile()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = plrSpeed
+	wait()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+	camera.FieldOfView = plrFOV
+	
+end
+	
+
 
 local function Notify(Image, Text)
 	local starterGUI = game:GetService('StarterGui')
@@ -41,13 +53,6 @@ local function Notify(Image, Text)
 		Text = Text;
 		Icon = 'rbxassetid://'.. Image
 	})
-end
-
-local function Highlight(Object)
-	local Hilight =  Instance.new('Highlight')
-	Hilight.Parent = Object
-	Hilight.FillColor = Color3.new(255, 255, 255)
-	Hilight.OutlineColor = Color3.new(255, 0, 0)
 end
 
 
@@ -79,31 +84,38 @@ local function ApplySettings(Object)
 				TextLabel.TextScaled = true -- if the text is scaled or not
 				BillboardGui.Name = "MonsterESPGUI"
 				position = PlrCharacter.Position
-				local monsterPOS = Object.WorldPivot.Position
-				local distanceBetweenPLRandENTITy = monsterPOS - position
-				local REALDISTANCE = distanceBetweenPLRandENTITy.Magnitude
-				if REALDISTANCE < 1000 then
-					if Object.Name == 'RushMoving' then
-						Notify('10716387808', 'Rush has been SPAWNED!')
+				if Object.Name == 'RushMoving' or 'AmbushMoving' then
+					local monsterPOS = Object:FindFirstChild('RushNew').Position
+					if monsterPOS then
+						local distanceBetweenPLRandENTITy = monsterPOS - position
+						local REALDISTANCE = distanceBetweenPLRandENTITy.Magnitude
+						if REALDISTANCE < 1000 then
+							if Object.Name == 'RushMoving' then
+								Notify('10716387808', 'Rush has been SPAWNED!')
+							end
+							if Object.Name == 'AmbushMoving' then
+								Notify('10722835155', 'Ambush has been SPAWNED!')
+							end
+
+							if Object.Name == 'A60' then
+								Notify('13854469049', 'A60 has been SPAWNED!')
+							end
+							if Object.Name == 'A120' then
+								Notify('12554635766', 'A120 has been SPAWNED!')
+							end
+						end
 					end
-					if Object.Name == 'AmbushMoving' then
-						Notify('10722835155', 'Ambush has been SPAWNED!')
-					end
-					if Object.Name == 'FigureRagdoll' or Object.Name == 'FigureLibrary' then
-						Notify('10743849078', 'Figure has been SPAWNED!')
-					end
-					if Object.Name == 'SeekMoving' then
-						Notify('10642752380', 'Seek has been SPAWNED!')
-					end
-					if Object.Name == 'Eyes' then
-						Notify('11537434023', 'Eyes has been SPAWNED!')
-					end
-					if Object.Name == 'A60' then
-						Notify('13854469049', 'A60 has been SPAWNED!')
-					end
-					if Object.Name == 'A120' then
-						Notify('12554635766', 'A120 has been SPAWNED!')
-					end
+				end
+				
+				
+				if Object.Name == 'FigureRagdoll' or Object.Name == 'FigureLibrary' then
+					Notify('10743849078', 'Figure has been SPAWNED!')
+				end
+				if Object.Name == 'SeekMoving' then
+					Notify('10642752380', 'Seek has been SPAWNED!')
+				end
+				if Object.Name == 'Eyes' then
+					Notify('11537434023', 'Eyes has been SPAWNED!')
 				end
 			end
 
@@ -133,7 +145,7 @@ local function ApplySettings(Object)
 					TextLabel.TextScaled = true -- if the text is scaled or not
 					TextLabel.TextScaled = true -- if the text is scaled or not
 					BillboardGui.Name = "ItemESPlol"
-					Highlight(Object)
+
 				end
 			end
 		end
@@ -178,7 +190,7 @@ local function ApplySettings(Object)
 			Object.HoldDuration = 0
 		end
 	end
-	
+
 	if Object.Name == 'Snare' then
 		Object.Hitbox.CanTouch = false
 	end
@@ -194,10 +206,12 @@ local CharacterSection = CharacterTab:NewSection("Character")
 
 CharacterSection:NewSlider("Speed", "Makes you go fast", 20, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+	plrSpeed = s
 end)
 
 CharacterSection:NewSlider("Fov", "Change your field of view", 120, 80, function(s) -- 500 (MaxValue) | 0 (MinValue)
 	camera.FieldOfView = s
+	plrFOV = s
 end)
 
 local EntityTab = Window:NewTab("Entity")
@@ -210,8 +224,8 @@ ESPSECTION:NewButton("ESP Player", "ESP", function()
 		local esp = Instance.new("Highlight")
 		esp.Name = v.Name
 		esp.FillTransparency = 0
-		esp.FillColor = Color3.new(1, 0.66667, 0)
-		esp.OutlineColor = Color3.new(1, 0.33337, 1)
+		esp.FillColor = Color3.new(0.329412, 0.356863, 0.392157)
+		esp.OutlineColor = Color3.new(1, 1, 1)
 
 		esp.Parent = v.Character
 	end
@@ -303,13 +317,13 @@ end)
 OthersSection:NewToggle("Godmode", "Become invicible (noclip bypass, only invicible to Rush/Ambush)", function(state)
 	if state then
 		local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
-	    Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
-	    game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
+		Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
+		game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
 
 	else
 		local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
-	    Collision.Position = Collision.Position + Vector3.new(0, 8.7, 0)
-	    game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
+		Collision.Position = Collision.Position + Vector3.new(0, 8.7, 0)
+		game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
 	end
 end)
 
@@ -333,3 +347,4 @@ end)
 workspace.DescendantAdded:Connect(ApplySettings)
 
 
+game:GetService('RunService').Heartbeat:Connect(ApplyWhile)
