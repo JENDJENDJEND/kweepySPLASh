@@ -38,8 +38,7 @@ end
 
 local function ApplyWhile()
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = plrSpeed
-	wait()
-	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = plrSpeed
 	camera.FieldOfView = plrFOV
 	
 end
