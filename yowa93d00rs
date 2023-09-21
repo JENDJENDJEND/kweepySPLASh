@@ -306,13 +306,6 @@ OthersSection:NewButton("Instant Interact", "Instant E", function()
 end)
 
 
-OthersSection:NewButton("Godmode", "Become invicible (noclip bypass, only invicible to Rush/Ambush)", function()
-	local Collision = game.Players.LocalPlayer.Character:FindFirstChild('Collision')
-	Collision.Position = Collision.Position - Vector3.new(0, 8.7, 0)
-	game:GetService("ReplicatedStorage").ClientModules.EntityModules.Void:Destroy()
-
-end)
-
 
 OthersSection:NewToggle("Godmode", "Become invicible (noclip bypass, only invicible to Rush/Ambush)", function(state)
 	if state then
@@ -327,8 +320,10 @@ OthersSection:NewToggle("Godmode", "Become invicible (noclip bypass, only invici
 	end
 end)
 
+
+
 local ModsTab = Window:NewTab("Mods")
-local ModsSection = OthersTab:NewSection("MODS")
+local ModsSection = ModsTab:NewSection("MODS")
 
 ModsSection:NewButton("Shears Mod", "The shears, might be found in game", function()
 	ShearsMod()
@@ -347,4 +342,4 @@ end)
 workspace.DescendantAdded:Connect(ApplySettings)
 
 
-game:GetService('RunService').Heartbeat:Connect(ApplyWhile)
+game:GetService('RunService').RenderStepped:Connect(ApplyWhile)
